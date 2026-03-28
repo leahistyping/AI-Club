@@ -577,6 +577,49 @@
         background: rgba(255, 255, 255, 0.82);
       }
 
+      .preset-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .preset {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.66);
+        cursor: pointer;
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      .preset:hover,
+      .preset:focus-visible {
+        transform: translateY(-2px);
+        background: rgba(216, 255, 98, 0.52);
+      }
+
+      .result-summary,
+      .route-card,
+      .admin-note {
+        margin-bottom: 14px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .result-summary strong,
+      .route-card strong,
+      .admin-note strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
       .results {
         display: grid;
         gap: 12px;
@@ -638,6 +681,109 @@
         font-size: 1rem;
       }
 
+      .route-list,
+      .admin-stats,
+      .admin-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .route-stop,
+      .admin-row,
+      .admin-stat {
+        display: grid;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .route-stop {
+        grid-template-columns: 52px 1fr;
+        align-items: start;
+      }
+
+      .route-stop span {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 800;
+      }
+
+      .route-stop strong,
+      .admin-row strong,
+      .admin-stat strong {
+        display: block;
+      }
+
+      .admin-stats {
+        grid-template-columns: repeat(3, 1fr);
+        margin-bottom: 14px;
+      }
+
+      .admin-stat strong {
+        font-size: 1.7rem;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .admin-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .admin-toolbar select {
+        min-height: 44px;
+        padding: 0 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 255, 255, 0.85);
+      }
+
+      .admin-row {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .admin-meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 74px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .status-new {
+        background: rgba(36, 84, 255, 0.12);
+        color: var(--cobalt);
+      }
+
+      .status-warm {
+        background: rgba(216, 255, 98, 0.72);
+      }
+
+      .status-locked {
+        background: rgba(255, 107, 74, 0.16);
+        color: #c64d31;
+      }
+
       .tech-grid {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -686,7 +832,8 @@
         .demo-layout,
         .tech-grid,
         .spec-grid,
-        .micro-grid {
+        .micro-grid,
+        .admin-stats {
           grid-template-columns: 1fr;
         }
 
@@ -738,7 +885,7 @@
           <a href="#journey">场景</a>
           <a href="#features">功能</a>
           <a href="#demo">Demo</a>
-          <a href="#spec">PRD</a>
+          <a href="#backstage">后台</a>
         </div>
         <a class="nav-cta" href="#demo">试玩匹配</a>
       </nav>
@@ -751,14 +898,15 @@
             <span class="eyebrow-dot"></span>
             campus recruiting goes viral
           </div>
-          <h1>让百团大战从乱逛，变成精准上头。</h1>
+          <h1>百团大战别再瞎逛了，直接逛到心巴上。</h1>
           <p class="hero-lead">
-            这是一个面向高校社团招新的 AI 智能匹配平台。它不是再做一个社团目录，而是把“新生发现社团”
-            这件事，重新做成一条像现代社交产品一样流畅、可解释、可传播、可转化的路径。
+            这不是又一个社团黄页，而是把社团 discovery 做得更聪明一点：先快速 get 你的兴趣、
+            时间、预算和 vibe，再把适合你的社团、路线和报名动作一口气串起来。少一点乱逛，多一点
+            “诶，这个真的懂我”。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#demo">打开动态 Demo</a>
-            <a class="btn btn-secondary" href="#spec">查看完整 PRD</a>
+            <a class="btn btn-primary" href="#demo">马上试试 AI Match</a>
+            <a class="btn btn-secondary" href="#backstage">看后台 Demo</a>
           </div>
           <div class="hero-grid">
             <div class="hero-stat">
@@ -798,10 +946,10 @@
 
         <aside class="surface hero-right reveal">
           <div class="floating-note">
-            <strong>动态可以上线，但分两层理解。</strong>
+            <strong>这版不是冷冰冰官网，是会动的产品 demo。</strong>
             <p>
-              现在的 GitHub Pages 适合上线前端动态交互、动画、筛选、推荐演示和内容展示。
-              如果你要登录、数据库、通知后台、真实报名流，则需要后续接 API 或服务端。
+              你可以把它理解成一个 very alive 的首发版本：前台能看、能玩、能感受到产品逻辑，后台也能
+              demo 出“招新怎么跑起来”。不是 PPT 感，是 launch 感。
             </p>
           </div>
           <div class="feed">
@@ -810,7 +958,7 @@
                 <strong>摄影社</strong>
                 <span class="score">91%</span>
               </div>
-              <p>艺术兴趣高度匹配，周末活动，零基础友好，适合先线上了解再线下接触。</p>
+              <p>文艺向超对味，周末活动不折腾，零基础也能丝滑入门，属于很容易一眼心动那种。</p>
               <div class="chips">
                 <span class="chip chip-acid">零基础友好</span>
                 <span class="chip chip-blue">嘉定可参与</span>
@@ -822,7 +970,7 @@
                 <strong>机器人创新社</strong>
                 <span class="score">88%</span>
               </div>
-              <p>科技实践导向强，项目制氛围明确，适合工作日晚间投入时间的新生。</p>
+              <p>偏 tech 和 project vibe，适合晚上愿意认真搞点东西的人，越做越容易上头。</p>
               <div class="chips">
                 <span class="chip chip-blue">项目制</span>
                 <span class="chip chip-acid">预算友好</span>
@@ -834,7 +982,7 @@
                 <strong>志愿者协会</strong>
                 <span class="score">86%</span>
               </div>
-              <p>跨校区覆盖广，门槛低，适合想快速融入校园关系网络的新生。</p>
+              <p>门槛低、覆盖广、节奏友好，想先快速认识人、融入校园，这类社团真的很稳。</p>
               <div class="chips">
                 <span class="chip chip-acid">低预算</span>
                 <span class="chip chip-blue">跨校区</span>
@@ -849,26 +997,25 @@
         <div class="section-head">
           <div>
             <div class="eyebrow">why this hits now</div>
-            <h2>真正的问题不是信息少，而是决策太散。</h2>
+            <h2>真正劝退人的，不是社团太多，是信息太碎。</h2>
           </div>
           <p>
-            新生对社团了解有限，现场窗口又极短；社团负责人的触达、介绍、报名和通知流程又分散在纸张、
-            表格、群聊和公众号之间。这个产品的核心是把结构化资料、AI 推荐、统一报名和线下路线合并成
-            一条闭环，不再让用户在噪音里自己拼信息。
+            新生刚开学本来就信息过载，到了百团大战现场更像在开盲盒；社团这边也经常一边发传单、一边拉群、
+            一边手忙脚乱记报名。这个产品想做的，就是把这些碎片重新 stitch 成一条顺滑链路，让选择不再靠缘分。
           </p>
         </div>
         <div class="grid-3">
           <article class="role-card">
             <h3>对新生</h3>
-            <p>快速筛出适合自己的社团，不再面对 100+ 社团无从下手，也降低社恐用户的接触压力。</p>
+            <p>不用在 100+ 社团里硬挑，先 get 到真正对味的几个，再决定要不要冲，省时也省心。</p>
           </article>
           <article class="role-card">
             <h3>对社团</h3>
-            <p>从“靠吼和发群二维码”升级成可解释、可管理、可导出、可持续跟进的招新基础设施。</p>
+            <p>从“来都来了先扫码”升级成可展示、可筛选、可跟进的招新面板，效率直接拉满。</p>
           </article>
           <article class="role-card">
             <h3>对学校</h3>
-            <p>统一字段、统一流程、统一数据口径，后续才能谈活跃度评估、合规审查和效果复盘。</p>
+            <p>数据口径统一之后，活跃度、转化和合规才终于不是玄学，能看、能比、能复盘。</p>
           </article>
         </div>
       </section>
@@ -877,11 +1024,11 @@
         <div class="section-head">
           <div>
             <div class="eyebrow">journey</div>
-            <h2>招新前线上发现，招新中线下提效，招新后继续转化。</h2>
+            <h2>先线上种草，再线下 hit，最后顺手完成转化。</h2>
           </div>
           <p>
-            首版真正该跑通的是两件事：第一，新生不用盲找就能提前锁定目标；第二，百团大战当天不靠运气，
-            而是按路径完成信息获取和报名动作。
+            最想解决的其实很简单：一是别让新生现场瞎跑；二是别让社团的好内容只停在“扫码进群”。整条路径顺了，
+            百团大战才会从忙乱变成有效。
           </p>
         </div>
         <div class="grid-2">
@@ -930,11 +1077,11 @@
         <div class="section-head">
           <div>
             <div class="eyebrow">scope</div>
-            <h2>先让 MVP 发光，再往更重的动态能力上叠。</h2>
+            <h2>先把 MVP 做到能打，再慢慢叠更 heavy 的能力。</h2>
           </div>
           <p>
-            你现在这个 repo 适合先承载产品官网、交互演示、PRD 文档和静态内容。真实后端、报名系统、
-            登录和通知推送可以作为下一阶段接入。
+            这一版重点不是把所有功能一口气堆满，而是先把“匹配感”“路线感”“报名感”和“后台感”做出来。
+            用户一看就能懂，社团一看就会想用。
           </p>
         </div>
         <div class="feature-grid">
@@ -1005,16 +1152,21 @@
         <div class="section-head">
           <div>
             <div class="eyebrow">live demo</div>
-            <h2>现在能上线的“动态”，先在前端把体验做出来。</h2>
+            <h2>先别空想，直接来一版能玩的 live demo。</h2>
           </div>
           <p>
-            这个 Demo 运行在纯静态页面里，但具备真实产品感的交互方式。它展示了：前端动态完全可以先上线，
-            尤其适合做产品展示、推荐演示、筛选体验和概念验证。
+            这部分我做得更像真实产品一点，不只是“看介绍”，而是你真的可以切画像、看推荐、看逛摊路线，
+            再顺手切到后台感受招新面板怎么 work。
           </p>
         </div>
         <div class="demo-layout">
           <section class="demo-panel">
             <h3>新生画像输入</h3>
+            <div class="preset-row">
+              <button class="preset" type="button" data-preset="artIntrovert">文艺 i 人</button>
+              <button class="preset" type="button" data-preset="techNight">tech 夜猫子</button>
+              <button class="preset" type="button" data-preset="socialButterfly">社牛体验派</button>
+            </div>
             <div class="form-grid">
               <div class="field">
                 <label for="interest">兴趣方向</label>
@@ -1061,89 +1213,57 @@
             </div>
             <div class="micro-grid">
               <article class="micro-card">
-                <strong>当前部署</strong>
-                <p>GitHub Pages，纯静态上线。</p>
+                <strong>上手速度</strong>
+                <p>30 秒填完，不磨叽，直接进推荐。</p>
               </article>
               <article class="micro-card">
-                <strong>当前动态</strong>
-                <p>推荐计算、动效、滚动 reveal、交互式筛选。</p>
+                <strong>推荐方式</strong>
+                <p>不是乱推，是按兴趣、时间、预算和 vibe 一起算。</p>
               </article>
               <article class="micro-card">
-                <strong>下一步</strong>
-                <p>接 API、报名表、后台和通知流。</p>
+                <strong>逛摊体验</strong>
+                <p>看完结果还能直接 get 一条今日路线，不容易走冤枉路。</p>
               </article>
             </div>
           </section>
           <section class="demo-panel">
             <h3>匹配结果</h3>
+            <div class="result-summary" id="matchSummary"></div>
             <div class="results" id="results"></div>
+            <div class="route-card">
+              <strong>今日逛摊路线</strong>
+              <div class="route-list" id="routePlan"></div>
+            </div>
           </section>
         </div>
       </section>
 
-      <section class="surface section reveal" id="stack">
+      <section class="surface section reveal" id="backstage">
         <div class="section-head">
           <div>
-            <div class="eyebrow">launch stack</div>
-            <h2>如果你问“能不能动态上线”，答案是能，但要分阶段。</h2>
+            <div class="eyebrow">backstage demo</div>
+            <h2>社团后台也别做成 Excel 2.0，得有点爽感。</h2>
           </div>
           <p>
-            当前仓库已经适合承载动态前端体验。真正的后端动态，包括报名写入、社团后台、消息推送、登录权限，
-            建议放到下一层架构中接入，而不是强行塞进 GitHub Pages。
+            前台解决的是“新生怎么选”，后台解决的是“社团怎么接得住这波人”。所以我把后台也做成了 demo
+            视角，让整套招新体验前后能连起来看，不会只剩一堆静态卡片。
           </p>
         </div>
-        <div class="tech-grid">
-          <article class="tech-card">
-            <h3>现在就能上线</h3>
-            <p>品牌页、产品说明、交互式匹配 Demo、动画、路线概念展示、PRD 文档入口。</p>
-            <small>完全兼容 GitHub Pages</small>
-          </article>
-          <article class="tech-card">
-            <h3>下一阶段可接</h3>
-            <p>表单提交、社团数据管理、真实推荐接口、FAQ 问答、报名导出与通知后台。</p>
-            <small>建议独立 API 或 serverless</small>
-          </article>
-          <article class="tech-card">
-            <h3>不建议现在强做</h3>
-            <p>在纯 Pages 里伪造数据库、伪造登录和伪造通知，后续迁移成本会更高。</p>
-            <small>先把前台体验和产品叙事打透</small>
-          </article>
-        </div>
-      </section>
-
-      <section class="surface section reveal" id="spec">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">repo spec</div>
-            <h2>你的完整 PRD 已经适合放进这个 repo。</h2>
-          </div>
-          <p>
-            我会把你提供的内容保存为仓库根目录的 `PRD.md`。这样它既能作为 GitHub 仓库内文档被阅读，
-            也能成为后续做小程序、后台或融资材料时的统一来源。
-          </p>
-        </div>
-        <div class="spec-grid">
-          <article class="spec-card">
-            <h3>仓库内文档</h3>
-            <p>
-              完整产品说明、痛点、场景、功能优先级、字段设计、AI 匹配逻辑与验证指标都会在
-              `PRD.md` 中保留。
-            </p>
-            <div class="chips">
-              <span class="chip chip-acid">产品源文档</span>
-              <span class="chip chip-blue">可继续迭代</span>
+        <div class="grid-2">
+          <article class="demo-panel">
+            <div class="admin-toolbar">
+              <h3>社团运营看板</h3>
+              <select id="adminClub"></select>
             </div>
+            <div class="admin-stats" id="adminStats"></div>
+            <div class="admin-note" id="adminNote"></div>
           </article>
-          <article class="spec-card">
-            <h3>入口策略</h3>
-            <p>
-              首页保留产品级表达和视觉感染力，完整长文档放到 repo 下，避免把官网首页做成纯文字墙。
-            </p>
-            <div class="chips">
-              <a class="chip chip-coral" href="https://github.com/leahistyping/AI-Club/blob/main/PRD.md"
-                >查看 GitHub PRD</a
-              >
+          <article class="demo-panel">
+            <div class="admin-toolbar">
+              <h3>最新报名流</h3>
+              <div class="chip chip-blue">live-ish</div>
             </div>
+            <div class="admin-list" id="adminList"></div>
           </article>
         </div>
       </section>
@@ -1151,10 +1271,10 @@
       <footer class="surface footer reveal">
         <div>
           <strong>社团搭子 AI</strong><br />
-          static launch now, real system next
+          less random, more your type
         </div>
         <div>
-          首页负责传播和演示，`PRD.md` 负责沉淀产品定义。
+          先把招新体验做得有感觉，再让真正的产品慢慢长出来。
         </div>
       </footer>
     </main>
@@ -1226,7 +1346,110 @@
         personality: document.getElementById("personality")
       };
 
+      const presets = {
+        artIntrovert: {
+          interest: "art",
+          campus: "jiading",
+          time: "weekend",
+          budget: "300",
+          personality: "introvert"
+        },
+        techNight: {
+          interest: "tech",
+          campus: "jiading",
+          time: "weekday-night",
+          budget: "300",
+          personality: "balanced"
+        },
+        socialButterfly: {
+          interest: "social",
+          campus: "siping",
+          time: "flexible",
+          budget: "999",
+          personality: "extrovert"
+        }
+      };
+
+      const adminBoards = {
+        摄影社: {
+          stats: [
+            { label: "今日新报名", value: "42" },
+            { label: "待跟进", value: "11" },
+            { label: "到场率预测", value: "73%" }
+          ],
+          note:
+            "今天文艺向流量有点起飞，i 人咨询很多，建议把“零基础也能入”继续顶在第一屏。",
+          queue: [
+            { name: "林然", meta: "大一 · 嘉定 · 想先旁听", status: "new", label: "刚到站" },
+            { name: "周可", meta: "研一 · 四平路 · 有修图基础", status: "warm", label: "高意向" },
+            { name: "顾言", meta: "大一 · 嘉定 · 周末稳定", status: "locked", label: "待拉群" }
+          ]
+        },
+        机器人创新社: {
+          stats: [
+            { label: "今日新报名", value: "36" },
+            { label: "待笔试", value: "9" },
+            { label: "项目匹配度", value: "81%" }
+          ],
+          note:
+            "tech 向用户更吃“项目制”和“作品展示”，把往期成果放前一点，转化会更丝滑。",
+          queue: [
+            { name: "郑宇", meta: "大一 · 嘉定 · 编程基础", status: "warm", label: "可直聊" },
+            { name: "宋一", meta: "大一 · 嘉定 · 晚上有空", status: "new", label: "新线索" },
+            { name: "陈初", meta: "研一 · 四平路 · 想做硬件", status: "locked", label: "已约面聊" }
+          ]
+        },
+        青年志愿者协会: {
+          stats: [
+            { label: "今日新报名", value: "58" },
+            { label: "待回访", value: "17" },
+            { label: "跨校区覆盖", value: "4" }
+          ],
+          note:
+            "这类社团天然适合做 first-touch，建议主打“轻门槛、轻负担、先来看看也行”。",
+          queue: [
+            { name: "许棠", meta: "大一 · 沪西 · 想认识人", status: "new", label: "刚报名" },
+            { name: "赵芮", meta: "大一 · 嘉定 · 低预算优先", status: "warm", label: "超匹配" },
+            { name: "邵安", meta: "大一 · 四平路 · 周末有空", status: "locked", label: "已进群" }
+          ]
+        },
+        辩论队: {
+          stats: [
+            { label: "今日新报名", value: "29" },
+            { label: "待筛选", value: "8" },
+            { label: "表达成长热度", value: "89%" }
+          ],
+          note:
+            "这类社团更吃“成长反馈感”，把训练节奏和收获说透，比一味强调强度更容易吸引新人。",
+          queue: [
+            { name: "韩宁", meta: "大一 · 四平路 · 想练表达", status: "warm", label: "高潜" },
+            { name: "苏澈", meta: "大一 · 嘉定 · 可跨校区", status: "new", label: "待联系" },
+            { name: "叶青", meta: "研一 · 四平路 · 逻辑强", status: "locked", label: "待面试" }
+          ]
+        },
+        街舞社: {
+          stats: [
+            { label: "今日新报名", value: "33" },
+            { label: "待排练", value: "14" },
+            { label: "现场围观热度", value: "95%" }
+          ],
+          note:
+            "高氛围社团的现场吸引力很强，后台更重要的是及时分流，不然热门摊位很容易直接爆掉。",
+          queue: [
+            { name: "唐乐", meta: "大一 · 沪西 · 想试试看", status: "new", label: "围观转粉" },
+            { name: "池语", meta: "大一 · 四平路 · 有基础", status: "warm", label: "优先邀约" },
+            { name: "夏真", meta: "大一 · 沪西 · 周末可排练", status: "locked", label: "待进队" }
+          ]
+        }
+      };
+
       const results = document.getElementById("results");
+      const matchSummary = document.getElementById("matchSummary");
+      const routePlan = document.getElementById("routePlan");
+      const adminClub = document.getElementById("adminClub");
+      const adminStats = document.getElementById("adminStats");
+      const adminNote = document.getElementById("adminNote");
+      const adminList = document.getElementById("adminList");
 
       function scoreClub(profile, club) {
         let score = 32;
@@ -1255,6 +1478,40 @@
         return parts.length ? parts : ["基础推荐"];
       }
 
+      function renderAdmin(clubName) {
+        const board = adminBoards[clubName] || adminBoards["摄影社"];
+
+        adminStats.innerHTML = board.stats
+          .map(
+            (item) => `
+              <article class="admin-stat">
+                <strong>${item.value}</strong>
+                <div>${item.label}</div>
+              </article>
+            `
+          )
+          .join("");
+
+        adminNote.innerHTML = `
+          <strong>运营提醒</strong>
+          <p>${board.note}</p>
+        `;
+
+        adminList.innerHTML = board.queue
+          .map(
+            (item) => `
+              <article class="admin-row">
+                <div>
+                  <strong>${item.name}</strong>
+                  <div class="admin-meta">${item.meta}</div>
+                </div>
+                <div class="status-pill status-${item.status}">${item.label}</div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
       function renderResults() {
         const profile = {
           interest: controls.interest.value,
@@ -1272,6 +1529,17 @@
           }))
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
+
+        const headlineClub = ranked[0];
+        const walkMins = [4, 7, 11];
+
+        matchSummary.innerHTML = `
+          <strong>今日最对味：${headlineClub.name}</strong>
+          <p>
+            这组画像现在最容易被 <strong>${headlineClub.name}</strong> 戳中。简单说就是：
+            ${headlineClub.reasons.join(" + ")}，属于很容易一上手就觉得“这波没白来”的类型。
+          </p>
+        `;
 
         results.innerHTML = ranked
           .map(
@@ -1298,10 +1566,53 @@
             `
           )
           .join("");
+
+        routePlan.innerHTML = ranked
+          .map(
+            (club, index) => `
+              <article class="route-stop">
+                <span>0${index + 1}</span>
+                <div>
+                  <strong>${club.name}</strong>
+                  <p>
+                    先去看这个，命中率高；预计 ${walkMins[index]} 分钟内可以到，顺手还能看看附近同类摊位。
+                  </p>
+                </div>
+              </article>
+            `
+          )
+          .join("");
+
+        adminClub.value = headlineClub.name;
+        renderAdmin(headlineClub.name);
       }
 
       Object.values(controls).forEach((control) => {
         control.addEventListener("change", renderResults);
+      });
+
+      Object.entries(adminBoards).forEach(([name]) => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        adminClub.appendChild(option);
+      });
+
+      adminClub.addEventListener("change", () => {
+        renderAdmin(adminClub.value);
+      });
+
+      document.querySelectorAll("[data-preset]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const preset = presets[button.dataset.preset];
+          if (!preset) return;
+
+          Object.entries(preset).forEach(([key, value]) => {
+            controls[key].value = value;
+          });
+
+          renderResults();
+        });
       });
 
       const revealObserver = new IntersectionObserver(
