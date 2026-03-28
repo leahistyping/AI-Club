@@ -26,8 +26,11 @@
 
 这些建议在后续通过 API、serverless 或独立后端接入。
 
-#当前网址（static）
+## 当前网址（static）
+
 https://leahistyping.github.io/AI-Club/ 
-欢迎交流，contribute。
+
+欢迎交流/contribute
+
 微信：bestgirlleah
 
