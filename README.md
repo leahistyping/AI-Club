@@ -26,9 +26,8 @@
 
 这些建议在后续通过 API、serverless 或独立后端接入。
 
-## 部署
+#当前网址（static）
+https://leahistyping.github.io/AI-Club/ 
+欢迎交流，contribute。
+微信：bestgirlleah
 
-1. 提交代码到 `main`
-2. 打开 GitHub 仓库 `Settings > Pages`
-3. 选择 `GitHub Actions`
-4. 等待 workflow 完成部署
