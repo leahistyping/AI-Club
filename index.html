@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>社团搭子 AI | 高校社团招新智能匹配平台</title>
+    <meta
+      name="description"
+      content="面向高校社团招新的 AI 智能匹配平台，帮助新生高效发现适合自己的社团，也帮助社团精准触达目标人群。"
+    />
+    <style>
+      :root {
+        --bg: #f7f3ea;
+        --paper: rgba(255, 252, 246, 0.82);
+        --paper-strong: #fffaf1;
+        --ink: #171717;
+        --muted: #5f5a52;
+        --line: rgba(23, 23, 23, 0.08);
+        --gold: #c86e3f;
+        --green: #1e5c54;
+        --berry: #823d58;
+        --shadow: 0 24px 80px rgba(24, 20, 16, 0.12);
+        --radius-xl: 32px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --max: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 10%, rgba(200, 110, 63, 0.14), transparent 28%),
+          radial-gradient(circle at 90% 16%, rgba(30, 92, 84, 0.14), transparent 25%),
+          radial-gradient(circle at 50% 84%, rgba(130, 61, 88, 0.12), transparent 30%),
+          linear-gradient(180deg, #efe7da 0%, #f7f3ea 34%, #f4efe5 100%);
+        font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+          sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .shell {
+        width: min(var(--max), calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border: 1px solid rgba(200, 110, 63, 0.18);
+        border-radius: 999px;
+        font-size: 0.86rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: rgba(200, 110, 63, 0.08);
+      }
+
+      .section-title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2rem, 4vw, 4rem);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .section-copy {
+        margin: 0;
+        max-width: 62ch;
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 1.02rem;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 18px 0;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 18px;
+        border-radius: 999px;
+        background: rgba(255, 248, 239, 0.76);
+        border: 1px solid rgba(23, 23, 23, 0.08);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: #fff9f0;
+        background: linear-gradient(135deg, var(--gold), var(--berry));
+      }
+
+      .brand-copy strong,
+      .brand-copy span {
+        display: block;
+      }
+
+      .brand-copy strong {
+        font-size: 0.98rem;
+      }
+
+      .brand-copy span {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible,
+      .cta:hover,
+      .cta:focus-visible,
+      .mini-link:hover,
+      .mini-link:focus-visible {
+        opacity: 0.75;
+      }
+
+      .nav-cta {
+        padding: 12px 18px;
+        border-radius: 999px;
+        color: #fffaf3;
+        background: linear-gradient(135deg, var(--green), #133d37);
+      }
+
+      main {
+        padding-bottom: 80px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+        gap: 22px;
+        padding-top: 18px;
+      }
+
+      .hero-panel {
+        padding: 48px;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .hero-copy h1 {
+        margin: 0;
+        max-width: 10ch;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3.5rem, 8vw, 7.2rem);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+      }
+
+      .hero-copy p {
+        margin: 0;
+        max-width: 56ch;
+        font-size: 1.08rem;
+        line-height: 1.85;
+        color: var(--muted);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 22px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        font-weight: 600;
+        transition: opacity 180ms ease;
+      }
+
+      .cta.primary {
+        color: #fff9f1;
+        background: linear-gradient(135deg, var(--gold), #dc8a53);
+        border-color: transparent;
+      }
+
+      .cta.secondary {
+        background: rgba(255, 255, 255, 0.48);
+      }
+
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .metric {
+        padding: 18px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.75rem;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .hero-aside {
+        padding: 26px;
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .mini-panel,
+      .preview-card,
+      .story-card,
+      .role-card,
+      .feature-card,
+      .data-card,
+      .metric-card,
+      .timeline-card {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.48);
+      }
+
+      .mini-panel {
+        padding: 18px;
+      }
+
+      .mini-panel strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .mini-panel p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hero-preview {
+        padding: 18px;
+        background: linear-gradient(180deg, rgba(255, 248, 239, 0.94), rgba(245, 237, 227, 0.8));
+      }
+
+      .preview-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .preview-top strong {
+        font-size: 1rem;
+      }
+
+      .mini-link {
+        color: var(--green);
+        font-size: 0.9rem;
+      }
+
+      .preview-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .preview-card {
+        padding: 16px;
+      }
+
+      .preview-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .preview-head strong {
+        font-size: 1rem;
+      }
+
+      .match-score {
+        color: var(--green);
+        font-weight: 700;
+      }
+
+      .preview-tags,
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(30, 92, 84, 0.1);
+        color: var(--green);
+        font-size: 0.84rem;
+      }
+
+      .section {
+        margin-top: 24px;
+        padding: 38px;
+      }
+
+      .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .roles,
+      .features,
+      .data-grid,
+      .metrics-grid,
+      .timeline {
+        display: grid;
+        gap: 16px;
+      }
+
+      .roles {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .role-card,
+      .feature-card,
+      .data-card,
+      .metric-card,
+      .timeline-card {
+        padding: 22px;
+      }
+
+      .role-card h3,
+      .feature-card h3,
+      .data-card h3,
+      .metric-card h3,
+      .timeline-card h3 {
+        margin: 0 0 10px;
+        font-size: 1.08rem;
+      }
+
+      .role-card p,
+      .feature-card p,
+      .data-card p,
+      .metric-card p,
+      .timeline-card p,
+      .story-copy p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .story-flow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .story-card {
+        overflow: hidden;
+      }
+
+      .story-head {
+        padding: 24px 24px 16px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.22));
+      }
+
+      .story-head span {
+        color: var(--gold);
+        font-size: 0.88rem;
+      }
+
+      .story-head h3 {
+        margin: 10px 0 0;
+        font-size: 1.28rem;
+      }
+
+      .story-copy {
+        padding: 22px 24px 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .step-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .step-index {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        color: #fff9f1;
+        background: linear-gradient(135deg, var(--berry), var(--gold));
+        font-weight: 700;
+      }
+
+      .step div strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .feature-columns {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .feature-column-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .badge {
+        min-width: 44px;
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        color: #fff9f1;
+      }
+
+      .badge.p0 {
+        background: var(--green);
+      }
+
+      .badge.p1 {
+        background: var(--gold);
+      }
+
+      .badge.p2 {
+        background: var(--berry);
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .feature-card small,
+      .metric-card small,
+      .data-card small {
+        display: block;
+        margin-top: 10px;
+        color: var(--gold);
+        font-size: 0.84rem;
+      }
+
+      .interactive {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 18px;
+      }
+
+      .form-panel,
+      .result-panel {
+        padding: 24px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .form-panel h3,
+      .result-panel h3 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .field select {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 14px;
+        border: 1px solid rgba(23, 23, 23, 0.1);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .result-stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .result-card {
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 250, 244, 0.88);
+      }
+
+      .result-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .result-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .data-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .metric-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 2.1rem;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .timeline {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .timeline-card span {
+        display: inline-block;
+        margin-bottom: 10px;
+        color: var(--berry);
+        font-size: 0.88rem;
+      }
+
+      .footer {
+        margin-top: 24px;
+        padding: 30px 38px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 1080px) {
+        .hero,
+        .interactive,
+        .feature-columns,
+        .story-flow,
+        .timeline,
+        .roles,
+        .metrics-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .data-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-copy h1 {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 760px) {
+        header {
+          position: static;
+        }
+
+        .nav {
+          border-radius: 28px;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+        }
+
+        .hero-panel,
+        .section,
+        .footer {
+          padding: 24px;
+        }
+
+        .hero-metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .section-title {
+          font-size: 2.2rem;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(2.8rem, 16vw, 4.6rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="shell">
+      <nav class="nav">
+        <div class="brand">
+          <div class="brand-badge">搭</div>
+          <div class="brand-copy">
+            <strong>社团搭子 AI</strong>
+            <span>高校社团招新智能匹配平台</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#value">产品价值</a>
+          <a href="#journey">使用场景</a>
+          <a href="#features">功能设计</a>
+          <a href="#demo">匹配演示</a>
+          <a href="#metrics">成功指标</a>
+        </div>
+        <a class="nav-cta" href="#demo">查看 Demo</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <article class="card hero-panel hero-copy">
+          <span class="tag">PRD To Launchable Site</span>
+          <h1>让新生 30 秒找到适合自己的社团。</h1>
+          <p>
+            面向高校社团招新场景的 AI 智能匹配平台。以同济大学“百团大战”为首发试点，打通
+            招新前的线上了解、招新中的线下高效逛摊，以及招新后的线上报名与通知跟进，降低信息
+            不透明、匹配困难、社恐门槛和重复填表带来的损耗。
+          </p>
+          <div class="hero-actions">
+            <a class="cta primary" href="#demo">立即查看匹配演示</a>
+            <a class="cta secondary" href="#features">阅读功能架构</a>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <strong>40%+</strong>
+              新生点击或收藏 AI 推荐社团的目标有效率
+            </div>
+            <div class="metric">
+              <strong>15%+</strong>
+              详情页到统一报名的目标转化率
+            </div>
+            <div class="metric">
+              <strong>70%+</strong>
+              社团信息完整度首版目标
+            </div>
+          </div>
+        </article>
+
+        <aside class="card hero-aside">
+          <div class="mini-panel">
+            <strong>为什么现在做</strong>
+            <p>
+              百团大战时间窗口极短，但新生决策成本极高。平台不是再做一个社团目录，而是把
+              “社团发现”改造成“社团匹配”。
+            </p>
+          </div>
+          <div class="mini-panel">
+            <strong>首发场景</strong>
+            <p>
+              微信小程序入口，适配扫码、搜索和校内传播；首发服务同济大学多校区新生与社团。
+            </p>
+          </div>
+          <section class="mini-panel hero-preview">
+            <div class="preview-top">
+              <strong>推荐结果预览</strong>
+              <a class="mini-link" href="#demo">交互体验</a>
+            </div>
+            <div class="preview-list">
+              <article class="preview-card">
+                <div class="preview-head">
+                  <strong>摄影社</strong>
+                  <span class="match-score">91%</span>
+                </div>
+                <div class="preview-tags">
+                  <span class="chip">零基础友好</span>
+                  <span class="chip">嘉定可参与</span>
+                  <span class="chip">周末活动</span>
+                </div>
+              </article>
+              <article class="preview-card">
+                <div class="preview-head">
+                  <strong>辩论队</strong>
+                  <span class="match-score">84%</span>
+                </div>
+                <div class="preview-tags">
+                  <span class="chip">表达成长</span>
+                  <span class="chip">面向新生</span>
+                  <span class="chip">统一报名</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="card section" id="value">
+        <div class="section-header">
+          <div>
+            <span class="tag">Product Value</span>
+            <h2 class="section-title">一个平台，同时服务新生、社团和校方。</h2>
+          </div>
+          <p class="section-copy">
+            核心不是信息堆砌，而是把决策关键点结构化，配合 AI 做匹配、解释与后续转化，把原本分散在
+            公众号、群聊、传单和现场口头介绍里的信息，收束成一条可测量、可优化的招新链路。
+          </p>
+        </div>
+        <div class="roles">
+          <article class="role-card">
+            <h3>新生</h3>
+            <p>
+              用更少时间筛到真正适合自己的社团，提前完成线上了解、收藏、预报名和路线规划，降低“我不知道该看什么”的焦虑。
+            </p>
+          </article>
+          <article class="role-card">
+            <h3>社团负责人</h3>
+            <p>
+              用结构化资料页、统一报名和管理面板替代纸质表单与多平台重复发文，减少录入和跟进成本，提高触达精度。
+            </p>
+          </article>
+          <article class="role-card">
+            <h3>学校管理方</h3>
+            <p>
+              通过统一字段、完整度要求和转化数据口径，提升社团招新规范性，并为活跃度评估和合规审查提供基础数据。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card section" id="journey">
+        <div class="section-header">
+          <div>
+            <span class="tag">User Journey</span>
+            <h2 class="section-title">把百团大战前、中、后的断裂流程连起来。</h2>
+          </div>
+          <p class="section-copy">
+            首版重点覆盖两条核心路径：招新前的线上发现筛选，以及招新当天的线下高效逛摊配合线上报名。
+          </p>
+        </div>
+        <div class="story-flow">
+          <article class="story-card">
+            <div class="story-head">
+              <span>场景 A</span>
+              <h3>招新前：30 秒建画像，提前锁定目标社团</h3>
+            </div>
+            <div class="story-copy">
+              <p>
+                小张刚入学，对社团几乎没有认知，且偏内向。平台先收集兴趣、时间、预算、校区和性格倾向，再直接给出推荐结果。
+              </p>
+              <div class="step-list">
+                <div class="step">
+                  <div class="step-index">01</div>
+                  <div>
+                    <strong>快速画像采集</strong>
+                    30 秒完成兴趣、空闲时间、预算区间、校区和性格倾向填写。
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-index">02</div>
+                  <div>
+                    <strong>AI 推荐社团列表</strong>
+                    按匹配度排序，并打上“零基础友好”“嘉定可参与”等直接决策标签。
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-index">03</div>
+                  <div>
+                    <strong>收藏与预报名</strong>
+                    在线先完成了解，给社恐用户保留低压路径，再决定是否线下进一步接触。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="story-card">
+            <div class="story-head">
+              <span>场景 B</span>
+              <h3>招新当天：目标导向逛摊，统一完成报名</h3>
+            </div>
+            <div class="story-copy">
+              <p>
+                中午只有 1.5 小时的百团大战，不适合漫无目的地逛。平台把收藏清单、摊位地图和一键报名整合成行动路线。
+              </p>
+              <div class="step-list">
+                <div class="step">
+                  <div class="step-index">01</div>
+                  <div>
+                    <strong>打开逛摊清单</strong>
+                    地图标出目标社团摊位，优先保证核心目标被覆盖。
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-index">02</div>
+                  <div>
+                    <strong>扫码即看社团卡片</strong>
+                    现场扫摊位二维码直接进入结构化详情，避免在嘈杂环境中靠口头重复解释。
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-index">03</div>
+                  <div>
+                    <strong>线上继续完成报名</strong>
+                    未逛完或排队太长的社团，可在线继续报名与接收后续通知，减少转化流失。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card section" id="features">
+        <div class="section-header">
+          <div>
+            <span class="tag">Feature Scope</span>
+            <h2 class="section-title">按照 MVP、增强和创新能力分层上线。</h2>
+          </div>
+          <p class="section-copy">
+            网站当前展示的是完整产品规划，但优先级清晰。首版优先服务“能匹配、能理解、能报名、能管理”四件事。
+          </p>
+        </div>
+        <div class="feature-columns">
+          <section class="feature-card">
+            <div class="feature-column-title">
+              <h3>P0 核心 MVP</h3>
+              <span class="badge p0">P0</span>
+            </div>
+            <div class="feature-list">
+              <div>
+                <strong>AI 智能匹配推荐</strong>
+                <p>基于兴趣、时间、预算、校区、性格进行双向匹配排序。</p>
+                <small>缓解 N2</small>
+              </div>
+              <div>
+                <strong>社团信息卡片</strong>
+                <p>结构化展示费用、频率、校区、适合人群和往期活动素材。</p>
+                <small>缓解 N1</small>
+              </div>
+              <div>
+                <strong>搜索与筛选</strong>
+                <p>按标签、预算、校区、时间段和零基础友好度筛选。</p>
+                <small>缓解 N1 / N2</small>
+              </div>
+              <div>
+                <strong>统一报名与社团后台</strong>
+                <p>新生只填一次基础信息，社团集中接收、导出和管理名单。</p>
+                <small>缓解 N6 / C3</small>
+              </div>
+            </div>
+          </section>
+
+          <section class="feature-card">
+            <div class="feature-column-title">
+              <h3>P1 重要增强</h3>
+              <span class="badge p1">P1</span>
+            </div>
+            <div class="feature-list">
+              <div>
+                <strong>招新地图与路线规划</strong>
+                <p>支持搜索定位摊位，并根据收藏社团生成最优逛摊路线。</p>
+                <small>缓解 N3 / N5</small>
+              </div>
+              <div>
+                <strong>i 人友好模式</strong>
+                <p>匿名提问、FAQ 自动回答，优先提供“先线上了解”的低压路径。</p>
+                <small>缓解 N4</small>
+              </div>
+              <div>
+                <strong>费用透明模块</strong>
+                <p>拆分会费、器材费、课时费与活动费，并生成一句话解释。</p>
+                <small>缓解 N1</small>
+              </div>
+              <div>
+                <strong>通知与跟进</strong>
+                <p>面试、地点变更、入社确认都可统一推送，避免社群漏通知。</p>
+                <small>缓解 C4 / E3</small>
+              </div>
+            </div>
+          </section>
+
+          <section class="feature-card">
+            <div class="feature-column-title">
+              <h3>P2 创新能力</h3>
+              <span class="badge p2">P2</span>
+            </div>
+            <div class="feature-list">
+              <div>
+                <strong>AI 自然语言问答</strong>
+                <p>支持“适合社恐、预算低于 300 的文艺社团”这类复合检索问法。</p>
+                <small>缓解 N2 / N4</small>
+              </div>
+              <div>
+                <strong>匹配度评分与解释</strong>
+                <p>输出 87% 这类匹配分，并说明由兴趣、时间、预算还是校区带来的差异。</p>
+                <small>缓解 N2</small>
+              </div>
+              <div>
+                <strong>校区联动与管理仪表盘</strong>
+                <p>覆盖跨校区协同、招新漏斗、社团活跃度评估与费用合规审查。</p>
+                <small>缓解 E4 / S1-S3</small>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="card section" id="demo">
+        <div class="section-header">
+          <div>
+            <span class="tag">Interactive Demo</span>
+            <h2 class="section-title">现场演示：用最简单的规则，展示匹配体验。</h2>
+          </div>
+          <p class="section-copy">
+            这不是后端真算法，而是官网里的产品演示组件。它用兴趣、预算、时间、校区和性格偏好计算示例匹配分，让访问者立即理解平台价值。
+          </p>
+        </div>
+        <div class="interactive">
+          <section class="form-panel">
+            <h3>你的新生画像</h3>
+            <div class="form-grid">
+              <div class="field">
+                <label for="interest">兴趣方向</label>
+                <select id="interest">
+                  <option value="art">文艺创作</option>
+                  <option value="sports">运动训练</option>
+                  <option value="tech">科技实践</option>
+                  <option value="social">公益社交</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campus">所在校区</label>
+                <select id="campus">
+                  <option value="jiading">嘉定</option>
+                  <option value="siping">四平路</option>
+                  <option value="huxi">沪西</option>
+                  <option value="hubei">沪北</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="time">空闲时间</label>
+                <select id="time">
+                  <option value="weekend">周末为主</option>
+                  <option value="weekday-night">工作日晚间</option>
+                  <option value="flexible">都可以</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="budget">预算区间</label>
+                <select id="budget">
+                  <option value="100">100 以内</option>
+                  <option value="300">100-300</option>
+                  <option value="999">300+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="personality">性格倾向</label>
+                <select id="personality">
+                  <option value="introvert">偏内向</option>
+                  <option value="balanced">都可以</option>
+                  <option value="extrovert">偏外向</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="result-panel">
+            <h3>推荐社团结果</h3>
+            <div class="result-stack" id="results"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="card section">
+        <div class="section-header">
+          <div>
+            <span class="tag">Data Structure</span>
+            <h2 class="section-title">先把信息结构化，AI 才有稳定发挥的基础。</h2>
+          </div>
+          <p class="section-copy">
+            平台不是直接“让 AI 自己理解一切”，而是先定义稳定字段，把社团侧和新生侧的关键维度抽出来，再进行双向映射。
+          </p>
+        </div>
+        <div class="data-grid">
+          <article class="data-card">
+            <h3>社团侧字段</h3>
+            <p>
+              包括社团名称、类型标签、一句话简介、适合人群、活动频率、常规活动时间、费用结构、校区、摊位位置、素材和联系方式。
+            </p>
+            <div class="chip-row">
+              <span class="chip">费用结构化</span>
+              <span class="chip">校区多选</span>
+              <span class="chip">活动时间标准化</span>
+              <span class="chip">媒体素材</span>
+            </div>
+          </article>
+          <article class="data-card">
+            <h3>新生侧字段</h3>
+            <p>
+              包括年级、兴趣方向、空闲时间、预算区间、性格倾向、所在校区和相关基础等，为推荐、过滤和统一报名提供最少但有效的数据输入。
+            </p>
+            <div class="chip-row">
+              <span class="chip">兴趣标签</span>
+              <span class="chip">时间偏好</span>
+              <span class="chip">预算约束</span>
+              <span class="chip">性格倾向</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card section">
+        <div class="section-header">
+          <div>
+            <span class="tag">Matching Logic</span>
+            <h2 class="section-title">匹配逻辑按权重解释，而不是黑箱推荐。</h2>
+          </div>
+          <p class="section-copy">
+            官网里明确展示推荐依据，能让新生理解“为什么推荐给我”，也能让社团理解“怎样改资料才更容易被合适的人看到”。
+          </p>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <strong>01</strong>
+            <h3>兴趣匹配</h3>
+            <p>新生兴趣标签与社团类型标签的重合度最高权重。</p>
+          </article>
+          <article class="metric-card">
+            <strong>02</strong>
+            <h3>时间兼容</h3>
+            <p>比较空闲时段与活动时间的重叠，减少“喜欢但参加不了”的伪匹配。</p>
+          </article>
+          <article class="metric-card">
+            <strong>03</strong>
+            <h3>校区可达</h3>
+            <p>同校区优先，跨校区可推荐但需提示参与成本。</p>
+          </article>
+          <article class="metric-card">
+            <strong>04</strong>
+            <h3>预算适配</h3>
+            <p>预算区间与全年费用总额匹配，避免价格信息最后才暴露。</p>
+          </article>
+          <article class="metric-card">
+            <strong>05</strong>
+            <h3>性格适配</h3>
+            <p>偏内向用户优先看到零基础友好、氛围轻松、可先线上了解的社团。</p>
+          </article>
+          <article class="metric-card">
+            <strong>06</strong>
+            <h3>基础匹配</h3>
+            <p>已有相关基础的用户可推荐进阶型社团，避免低估用户能力。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card section" id="metrics">
+        <div class="section-header">
+          <div>
+            <span class="tag">Success Metrics</span>
+            <h2 class="section-title">首版不是看流量，而是看匹配和报名是否真的更高效。</h2>
+          </div>
+          <p class="section-copy">
+            指标围绕推荐有效率、报名转化率、信息完整度、问答使用率和满意度建立，确保产品不是“看起来很智能”，而是确实提升招新结果。
+          </p>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <strong>≥40%</strong>
+            <h3>新生匹配有效率</h3>
+            <p>点击或收藏 AI 推荐社团的比例。</p>
+          </article>
+          <article class="metric-card">
+            <strong>≥15%</strong>
+            <h3>报名转化率</h3>
+            <p>浏览社团详情后完成报名的占比。</p>
+          </article>
+          <article class="metric-card">
+            <strong>≥70%</strong>
+            <h3>信息完整度</h3>
+            <p>社团填写全部必填字段且补充至少两个选填字段。</p>
+          </article>
+          <article class="metric-card">
+            <strong>≥20%</strong>
+            <h3>问答使用率</h3>
+            <p>使用 AI 问答能力的新生占比。</p>
+          </article>
+          <article class="metric-card">
+            <strong>≥30</strong>
+            <h3>满意度 NPS</h3>
+            <p>新生与社团负责人的综合净推荐值目标。</p>
+          </article>
+          <article class="metric-card">
+            <strong>AB</strong>
+            <h3>现场验证</h3>
+            <p>对比使用平台与未使用平台的新生在逛摊效率和报名数量上的差异。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card section">
+        <div class="section-header">
+          <div>
+            <span class="tag">Validation Plan</span>
+            <h2 class="section-title">上线后验证路径也已经定义清楚。</h2>
+          </div>
+          <p class="section-copy">
+            从内测、上线后一周的数据分析，到百团大战当天的现场观察，再到招新季结束后的深访，验证链路完整，便于之后做产品迭代。
+          </p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-card">
+            <span>阶段 01</span>
+            <h3>上线前内测</h3>
+            <p>50 名新生加 10 个社团，验证资料字段、推荐质量和核心流程。</p>
+          </article>
+          <article class="timeline-card">
+            <span>阶段 02</span>
+            <h3>上线后一周</h3>
+            <p>看埋点和问卷，复盘推荐点击、收藏、报名等关键漏斗节点。</p>
+          </article>
+          <article class="timeline-card">
+            <span>阶段 03</span>
+            <h3>活动当天</h3>
+            <p>做现场 AB 观察，重点比较逛摊效率和目标社团覆盖率。</p>
+          </article>
+          <article class="timeline-card">
+            <span>阶段 04</span>
+            <h3>招新季结束</h3>
+            <p>访谈新生与社团负责人，收集真实决策阻力和跟进链路问题。</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="card footer">
+        <div>
+          <strong>社团搭子 AI</strong><br />
+          高校社团招新智能匹配平台官网 Demo
+        </div>
+        <div>当前版本适配 GitHub Pages，静态部署即可上线。</div>
+      </footer>
+    </main>
+
+    <script>
+      const clubs = [
+        {
+          name: "摄影社",
+          type: "art",
+          campus: ["jiading", "siping"],
+          time: ["weekend", "flexible"],
+          budget: 180,
+          introvertFriendly: true,
+          reason: "文艺兴趣高度匹配，周末活动友好，零基础可加入。",
+          tags: ["零基础友好", "活动照片丰富", "嘉定可参与"]
+        },
+        {
+          name: "机器人创新社",
+          type: "tech",
+          campus: ["jiading"],
+          time: ["weekday-night", "flexible"],
+          budget: 120,
+          introvertFriendly: true,
+          reason: "适合科技实践导向用户，工作日晚间安排清晰，预算压力低。",
+          tags: ["科技实践", "项目制", "嘉定优先"]
+        },
+        {
+          name: "街舞社",
+          type: "sports",
+          campus: ["siping", "huxi"],
+          time: ["weekday-night", "weekend", "flexible"],
+          budget: 360,
+          introvertFriendly: false,
+          reason: "训练频率较高，适合外向或愿意高频参与的用户。",
+          tags: ["强氛围", "高活跃度", "训练密集"]
+        },
+        {
+          name: "青年志愿者协会",
+          type: "social",
+          campus: ["jiading", "siping", "huxi", "hubei"],
+          time: ["weekend", "flexible"],
+          budget: 0,
+          introvertFriendly: true,
+          reason: "公益社交场景稳定，预算友好，跨校区覆盖最完整。",
+          tags: ["低预算", "跨校区", "公益活动"]
+        },
+        {
+          name: "辩论队",
+          type: "social",
+          campus: ["siping"],
+          time: ["weekday-night", "flexible"],
+          budget: 80,
+          introvertFriendly: false,
+          reason: "表达训练强，适合希望快速锻炼沟通与观点输出的新生。",
+          tags: ["表达成长", "面试训练", "线下活动多"]
+        }
+      ];
+
+      const controls = {
+        interest: document.getElementById("interest"),
+        campus: document.getElementById("campus"),
+        time: document.getElementById("time"),
+        budget: document.getElementById("budget"),
+        personality: document.getElementById("personality")
+      };
+
+      const results = document.getElementById("results");
+
+      function scoreClub(profile, club) {
+        let score = 35;
+
+        if (profile.interest === club.type) score += 28;
+        if (club.campus.includes(profile.campus)) score += 16;
+        if (club.time.includes(profile.time) || profile.time === "flexible") score += 12;
+        if (club.budget <= Number(profile.budget)) score += 10;
+        if (profile.personality === "introvert" && club.introvertFriendly) score += 8;
+        if (profile.personality === "extrovert" && !club.introvertFriendly) score += 6;
+        if (profile.personality === "balanced") score += 4;
+
+        return Math.min(score, 98);
+      }
+
+      function renderResults() {
+        const profile = {
+          interest: controls.interest.value,
+          campus: controls.campus.value,
+          time: controls.time.value,
+          budget: controls.budget.value,
+          personality: controls.personality.value
+        };
+
+        const ranked = clubs
+          .map((club) => ({ ...club, score: scoreClub(profile, club) }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+
+        results.innerHTML = ranked
+          .map(
+            (club) => `
+              <article class="result-card">
+                <strong>${club.name} · 匹配度 ${club.score}%</strong>
+                <p>${club.reason}</p>
+                <div class="chip-row">
+                  ${club.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      Object.values(controls).forEach((control) => {
+        control.addEventListener("change", renderResults);
+      });
+
+      renderResults();
+    </script>
+  </body>
+</html>
