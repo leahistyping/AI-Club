@@ -688,9 +688,17 @@
         gap: 12px;
       }
 
+      .admin-campaigns,
+      .event-list {
+        display: grid;
+        gap: 12px;
+      }
+
       .route-stop,
       .admin-row,
-      .admin-stat {
+      .admin-stat,
+      .campaign-card,
+      .event-card {
         display: grid;
         gap: 8px;
         padding: 14px;
@@ -782,6 +790,45 @@
       .status-locked {
         background: rgba(255, 107, 74, 0.16);
         color: #c64d31;
+      }
+
+      .campaign-card strong,
+      .event-card strong {
+        display: block;
+      }
+
+      .campaign-meta,
+      .event-meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .campaign-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .mini-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(17, 17, 17, 0.06);
+        font-size: 0.8rem;
+      }
+
+      .social-post {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px dashed var(--line-strong);
+        background: rgba(255, 255, 255, 0.66);
+      }
+
+      .social-post strong {
+        display: block;
+        margin-bottom: 8px;
       }
 
       .tech-grid {
@@ -1166,6 +1213,8 @@
               <button class="preset" type="button" data-preset="artIntrovert">文艺 i 人</button>
               <button class="preset" type="button" data-preset="techNight">tech 夜猫子</button>
               <button class="preset" type="button" data-preset="socialButterfly">社牛体验派</button>
+              <button class="preset" type="button" data-preset="languageWarm">语言同好局</button>
+              <button class="preset" type="button" data-preset="careerRush">求职脑启动</button>
             </div>
             <div class="form-grid">
               <div class="field">
@@ -1175,6 +1224,8 @@
                   <option value="sports">运动训练</option>
                   <option value="tech">科技实践</option>
                   <option value="social">公益社交</option>
+                  <option value="language">语言表达</option>
+                  <option value="career">就业成长</option>
                 </select>
               </div>
               <div class="field">
@@ -1265,6 +1316,21 @@
             </div>
             <div class="admin-list" id="adminList"></div>
           </article>
+          <article class="demo-panel">
+            <div class="admin-toolbar">
+              <h3>招新动作面板</h3>
+              <div class="chip chip-coral">campaign mode</div>
+            </div>
+            <div class="admin-campaigns" id="adminCampaigns"></div>
+          </article>
+          <article class="demo-panel">
+            <div class="admin-toolbar">
+              <h3>活动与推送节奏</h3>
+              <div class="chip chip-acid">next up</div>
+            </div>
+            <div class="social-post" id="socialPost"></div>
+            <div class="event-list" id="eventList"></div>
+          </article>
         </div>
       </section>
 
@@ -1335,6 +1401,50 @@
           explanation:
             "如果你的目标是表达训练和快速打开社交状态，这类社团的成长反馈更直接。",
           tags: ["表达成长", "观点输出", "训练稳定"]
+        },
+        {
+          name: "英语戏剧社",
+          type: "language",
+          campus: ["siping", "jiading"],
+          time: ["weekday-night", "weekend", "flexible"],
+          budget: 120,
+          introvertFriendly: true,
+          explanation:
+            "语言表达和舞台感都在线，既能练口语也能练存在感，属于很容易从围观变成入坑的类型。",
+          tags: ["语言表达", "轻表演", "零基础友好"]
+        },
+        {
+          name: "日语交流社",
+          type: "language",
+          campus: ["huxi", "siping"],
+          time: ["weekend", "flexible"],
+          budget: 60,
+          introvertFriendly: true,
+          explanation:
+            "更偏轻社交和兴趣陪伴，节奏不卷，适合想找同好、顺手提升一点语言手感的人。",
+          tags: ["同好浓度高", "预算低", "氛围轻松"]
+        },
+        {
+          name: "Career Lab 求职成长社",
+          type: "career",
+          campus: ["siping", "jiading"],
+          time: ["weekday-night", "flexible"],
+          budget: 90,
+          introvertFriendly: true,
+          explanation:
+            "如果你对简历、面试、实习信息差比较敏感，这类社团会给你很直接的成长反馈和资源感。",
+          tags: ["就业成长", "简历面试", "信息密度高"]
+        },
+        {
+          name: "商业案例分析社",
+          type: "career",
+          campus: ["siping"],
+          time: ["weekday-night", "weekend"],
+          budget: 150,
+          introvertFriendly: false,
+          explanation:
+            "更适合喜欢组队、做 case 和输出观点的人，节奏会更强，但回报感也更明确。",
+          tags: ["case study", "组队输出", "职业导向"]
         }
       ];
 
@@ -1367,6 +1477,20 @@
           time: "flexible",
           budget: "999",
           personality: "extrovert"
+        },
+        languageWarm: {
+          interest: "language",
+          campus: "siping",
+          time: "weekend",
+          budget: "300",
+          personality: "introvert"
+        },
+        careerRush: {
+          interest: "career",
+          campus: "siping",
+          time: "weekday-night",
+          budget: "300",
+          personality: "balanced"
         }
       };
 
@@ -1383,6 +1507,16 @@
             { name: "林然", meta: "大一 · 嘉定 · 想先旁听", status: "new", label: "刚到站" },
             { name: "周可", meta: "研一 · 四平路 · 有修图基础", status: "warm", label: "高意向" },
             { name: "顾言", meta: "大一 · 嘉定 · 周末稳定", status: "locked", label: "待拉群" }
+          ],
+          campaigns: [
+            { title: "设计挑战海报", meta: "48h 限时拍照挑战，激活小红书种草流量", actions: ["海报已排版", "评论区接龙", "抽奖贴纸包"] },
+            { title: "趣味活动", meta: "现场三连拍打卡墙，路过的人很难不看一眼", actions: ["拍照框", "即时打印", "社群导流"] }
+          ],
+          social:
+            "本周推送：#百团大战出片现场 已经准备好，文案主打“不会拍也能来，来玩就能出片”。",
+          events: [
+            { title: "新生 Walk-in 体验夜", meta: "周三 19:00 · 嘉定教室 · 无门槛旁听" },
+            { title: "Lightroom 入门局", meta: "周末 14:00 · 作品拆解 + 修图试玩" }
           ]
         },
         机器人创新社: {
@@ -1397,6 +1531,16 @@
             { name: "郑宇", meta: "大一 · 嘉定 · 编程基础", status: "warm", label: "可直聊" },
             { name: "宋一", meta: "大一 · 嘉定 · 晚上有空", status: "new", label: "新线索" },
             { name: "陈初", meta: "研一 · 四平路 · 想做硬件", status: "locked", label: "已约面聊" }
+          ],
+          campaigns: [
+            { title: "机甲海报 Drop", meta: "把往届项目做成赛博感海报，适合吸引 tech 脑", actions: ["海报主视觉", "作品轮播", "扫码报名"] },
+            { title: "趣味体验", meta: "现场开一个 5 分钟小机器人试玩台，围观转化会更高", actions: ["试玩台", "队列分流", "演示脚本"] }
+          ],
+          social:
+            "本周推送：今晚发一条“项目制不是苦工，是超快成长加速器”的短帖，顺便带作品图。",
+          events: [
+            { title: "开源项目破冰夜", meta: "周四 20:00 · 嘉定实验室 · 学长带入门" },
+            { title: "硬件组体验 workshop", meta: "周末 15:00 · 现场拆解 + mini demo" }
           ]
         },
         青年志愿者协会: {
@@ -1411,6 +1555,16 @@
             { name: "许棠", meta: "大一 · 沪西 · 想认识人", status: "new", label: "刚报名" },
             { name: "赵芮", meta: "大一 · 嘉定 · 低预算优先", status: "warm", label: "超匹配" },
             { name: "邵安", meta: "大一 · 四平路 · 周末有空", status: "locked", label: "已进群" }
+          ],
+          campaigns: [
+            { title: "温柔系招新海报", meta: "文案主打“第一次参加也完全 ok”，更适合新生 first-touch", actions: ["暖色海报", "FAQ 卡片", "一键入群"] },
+            { title: "趣味快闪摊位", meta: "心愿便利贴墙 + 志愿地图，让停留更自然", actions: ["愿望墙", "拍照点", "现场登记"] }
+          ],
+          social:
+            "本周推送：准备一条“社恐友好志愿活动清单”，更容易被收藏和转发。",
+          events: [
+            { title: "校园净滩 mini 行动", meta: "周六上午 · 轻量参与 · 可带朋友一起" },
+            { title: "新生破冰茶会", meta: "周日 16:00 · 低压社交局" }
           ]
         },
         辩论队: {
@@ -1425,6 +1579,16 @@
             { name: "韩宁", meta: "大一 · 四平路 · 想练表达", status: "warm", label: "高潜" },
             { name: "苏澈", meta: "大一 · 嘉定 · 可跨校区", status: "new", label: "待联系" },
             { name: "叶青", meta: "研一 · 四平路 · 逻辑强", status: "locked", label: "待面试" }
+          ],
+          campaigns: [
+            { title: "观点 Battle 海报", meta: "把招新做成辩题挑战，天然适合社媒传播", actions: ["今日辩题", "评论投票", "线下围观"] },
+            { title: "趣味试玩", meta: "3 分钟 mini battle，比直接讲训练强度更容易让人入坑", actions: ["速辩环节", "投票贴纸", "新人体验卡"] }
+          ],
+          social:
+            "本周推送：先发一条“你不是不会表达，是还没被训练过”的短文，收藏率会很高。",
+          events: [
+            { title: "新生 mini battle night", meta: "周三晚 · 轻体验 · 无需基础" },
+            { title: "论点拆解 workshop", meta: "周末下午 · 学长现场带练" }
           ]
         },
         街舞社: {
@@ -1439,6 +1603,112 @@
             { name: "唐乐", meta: "大一 · 沪西 · 想试试看", status: "new", label: "围观转粉" },
             { name: "池语", meta: "大一 · 四平路 · 有基础", status: "warm", label: "优先邀约" },
             { name: "夏真", meta: "大一 · 沪西 · 周末可排练", status: "locked", label: "待进队" }
+          ],
+          campaigns: [
+            { title: "battle 风主视觉", meta: "强视觉海报挂出去，路人停留率会直线上来", actions: ["主海报", "动作短视频", "现场循环播"] },
+            { title: "趣味随机舞挑战", meta: "摊位前 30 秒互动挑战，围观自然变流量", actions: ["挑战榜", "打卡贴", "报名通道"] }
+          ],
+          social:
+            "本周推送：短视频先发练习室切片，再补一条“零基础也能蹦”的图文，转化更稳。",
+          events: [
+            { title: "新生 open class", meta: "周五晚 · 沪西排练室 · 轻松跟跳" },
+            { title: "编舞体验场", meta: "周末下午 · 1 小时上手" }
+          ]
+        },
+        英语戏剧社: {
+          stats: [
+            { label: "今日新报名", value: "31" },
+            { label: "待试演", value: "10" },
+            { label: "口语热度", value: "84%" }
+          ],
+          note:
+            "语言社团别只写“提升口语”，把表演、朋友浓度和成就感一起写进去，会更抓人。",
+          queue: [
+            { name: "黎音", meta: "大一 · 四平路 · 喜欢英文歌", status: "warm", label: "高匹配" },
+            { name: "徐乔", meta: "大一 · 嘉定 · 想练开口", status: "new", label: "刚加入" },
+            { name: "程野", meta: "研一 · 四平路 · 有主持经验", status: "locked", label: "待试演" }
+          ],
+          campaigns: [
+            { title: "戏剧感招新海报", meta: "主打“练口语也练存在感”，比纯学习感更吸睛", actions: ["双语海报", "角色海报", "试演报名"] },
+            { title: "趣味活动", meta: "电影台词模仿挑战，很适合现场拉新和社媒扩散", actions: ["台词卡", "互动投票", "打卡视频"] }
+          ],
+          social:
+            "本周推送：发一条“英语不好也可以先演起来”的 reel 风短帖，降低门槛感。",
+          events: [
+            { title: "英文即兴小剧场", meta: "周四晚 · 四平路 · 轻松试演局" },
+            { title: "台词模仿 fun night", meta: "周末 19:00 · 朋友一起更好玩" }
+          ]
+        },
+        日语交流社: {
+          stats: [
+            { label: "今日新报名", value: "27" },
+            { label: "待欢迎", value: "12" },
+            { label: "社群活跃预估", value: "78%" }
+          ],
+          note:
+            "这种偏同好型社团更适合做轻内容运营，别太官方，越像朋友局越容易留人。",
+          queue: [
+            { name: "沈栀", meta: "大一 · 沪西 · 动漫同好", status: "warm", label: "超对味" },
+            { name: "任雪", meta: "大一 · 四平路 · 零基础", status: "new", label: "待欢迎" },
+            { name: "江临", meta: "研一 · 四平路 · 有 N2 基础", status: "locked", label: "待拉群" }
+          ],
+          campaigns: [
+            { title: "同好感海报", meta: "海报风格可以更像兴趣社区，不必太像培训班", actions: ["角色贴纸", "社团 tag", "拍照背景"] },
+            { title: "趣味活动", meta: "猜台词、配音、日剧 bingo 这类轻互动更容易拉停留", actions: ["bingo 卡", "配音挑战", "现场投票"] }
+          ],
+          social:
+            "本周推送：可以先发“这不是日语卷王社，是同好浓度很高的快乐角落”，语气会更招人。",
+          events: [
+            { title: "日剧台词夜", meta: "周六晚 · 四平路 · 轻松跟读局" },
+            { title: "配音 fun session", meta: "周日 14:00 · 新人可直接上手" }
+          ]
+        },
+        "Career Lab 求职成长社": {
+          stats: [
+            { label: "今日新报名", value: "47" },
+            { label: "待建档", value: "13" },
+            { label: "简历诊断预约", value: "22" }
+          ],
+          note:
+            "就业向社团天然高需求，但也最容易显得功利。把“资源感”跟“陪伴感”一起做出来，转化会更稳。",
+          queue: [
+            { name: "段宁", meta: "大一 · 四平路 · 想早点准备实习", status: "warm", label: "高意向" },
+            { name: "吴序", meta: "大一 · 嘉定 · 想改简历", status: "new", label: "待回访" },
+            { name: "陆川", meta: "研一 · 四平路 · 求职焦虑", status: "locked", label: "待咨询" }
+          ],
+          campaigns: [
+            { title: "求职挑战海报", meta: "7 天简历升级 challenge，很适合做持续追更型招新", actions: ["挑战海报", "每日任务", "成果晒图"] },
+            { title: "趣味活动", meta: "模拟群面冲刺局，既有实用感也有现场围观感", actions: ["群面卡片", "即时反馈", "预约表单"] }
+          ],
+          social:
+            "本周推送：发一条“不是教你卷，是帮你少走弯路”的社媒文案，会比纯鸡血路线更好转发。",
+          events: [
+            { title: "简历急救室", meta: "周三晚 · 四平路 · 1 对 1 快速看简历" },
+            { title: "模拟面试 night", meta: "周末下午 · 学长学姐现场反馈" }
+          ]
+        },
+        商业案例分析社: {
+          stats: [
+            { label: "今日新报名", value: "34" },
+            { label: "待分组", value: "9" },
+            { label: "case 热度", value: "87%" }
+          ],
+          note:
+            "这类社团适合强调“和聪明人一起做事”的感觉，但不要太精英压迫，保留一点新手入口更重要。",
+          queue: [
+            { name: "周珂", meta: "大一 · 四平路 · 喜欢商业分析", status: "warm", label: "可进组" },
+            { name: "林一舟", meta: "大一 · 嘉定 · 想试试看", status: "new", label: "待欢迎" },
+            { name: "陶予", meta: "研一 · 四平路 · 有竞赛经验", status: "locked", label: "待配队" }
+          ],
+          campaigns: [
+            { title: "case challenge 海报", meta: "把招新做成 mini 商赛，天然就有传播和筛选效果", actions: ["挑战 brief", "组队入口", "排行榜"] },
+            { title: "趣味活动", meta: "15 分钟商业热点拆解，很适合在现场围出一小圈人", actions: ["热点卡片", "速讲台", "现场投票"] }
+          ],
+          social:
+            "本周推送：短文案别太像咨询公司 JD，写成“想跟会思考的人一起做 case 吗”会更有吸引力。",
+          events: [
+            { title: "新生 mini case jam", meta: "周四晚 · 现场组队 · 轻量试水" },
+            { title: "行业分享 afterparty", meta: "周末 19:30 · 学长经验局" }
           ]
         }
       };
@@ -1450,6 +1720,9 @@
       const adminStats = document.getElementById("adminStats");
       const adminNote = document.getElementById("adminNote");
       const adminList = document.getElementById("adminList");
+      const adminCampaigns = document.getElementById("adminCampaigns");
+      const socialPost = document.getElementById("socialPost");
+      const eventList = document.getElementById("eventList");
 
       function scoreClub(profile, club) {
         let score = 32;
@@ -1506,6 +1779,36 @@
                   <div class="admin-meta">${item.meta}</div>
                 </div>
                 <div class="status-pill status-${item.status}">${item.label}</div>
+              </article>
+            `
+          )
+          .join("");
+
+        adminCampaigns.innerHTML = board.campaigns
+          .map(
+            (item) => `
+              <article class="campaign-card">
+                <strong>${item.title}</strong>
+                <div class="campaign-meta">${item.meta}</div>
+                <div class="campaign-actions">
+                  ${item.actions.map((action) => `<span class="mini-pill">${action}</span>`).join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+
+        socialPost.innerHTML = `
+          <strong>社媒推送建议</strong>
+          <p>${board.social}</p>
+        `;
+
+        eventList.innerHTML = board.events
+          .map(
+            (item) => `
+              <article class="event-card">
+                <strong>${item.title}</strong>
+                <div class="event-meta">${item.meta}</div>
               </article>
             `
           )
